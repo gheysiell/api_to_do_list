@@ -2,8 +2,9 @@ const { request, response } = require('express')
 const model_to_dos = require('../models/model_to_dos')
 
 const insert_data = async (req, res) => {
-    const { name } = request.body
+    const { name } = req.body
     const todo = await model_to_dos.create({name})
+        
     return res.status(201).json(todo)
 }
 
@@ -34,11 +35,12 @@ const update_data = async (req, res) => {
             id: id
         }
     })
-    return res.status(201).send(todo)
+
+    return res.status(200).json(todo)
 }
 
 const delete_data = async (req, res) => {    
-    const { id } = request.params
+    const { id } = req.params
 
     const intId = parseInt(id)
 
@@ -56,13 +58,13 @@ const delete_data = async (req, res) => {
         return res.status(404).send("id not exists")
     }
 
-    await model_to_dos.delete({
+    await model_to_dos.destroy({
         where: {
             id: intId
         }
     })
 
-    return response.status(200).send('inserted with success.')
+    return res.status(200).send('deleted with success.')
 }
 
 module.exports = {

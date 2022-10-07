@@ -9,6 +9,9 @@ const model_to_dos = db.database.define('to_dos', {
     },
     name: db.DataTypes.STRING,
     status: db.DataTypes.BOOLEAN,
+}, {
+    timestamps: false,
+    freezeTableName: true,
 })
 
 const call_sync = async () => {
@@ -17,6 +20,4 @@ const call_sync = async () => {
 
 call_sync()
 
-module.exports = { 
-    model_to_dos
-}
+module.exports = model_to_dos
